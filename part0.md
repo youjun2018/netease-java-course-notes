@@ -42,5 +42,21 @@ int main(){
 全方大的空白&emsp;或&#8195;
 不断行的空白格&nbsp;或&#160;
 
+删除线
+~~您好~~
+
 &nbsp; 空格（去掉空格）
 </br>回车（去掉空格）
+
+数学公式
+https://blog.csdn.net/katherine_hsr/article/details/79179622
+别忘了加$，并且要留有空格
+上标 $21^{31} - 1$
+下标 $21_{31} - 1$
+
+markdown 如何插入公式
+https://atom-china.org/t/atom-markdown/1099/2
+Atom china
+
+atom 左侧文件夹怎么打开
+在打开文件的选项卡上单击右键，在弹出的菜单中点击"Reveal in Tree View" 就可以了
