@@ -37,6 +37,12 @@ int main(){
 标题元件(表头)至少需要3个---来分隔
 最外面的竖线|可以省略，书写的时候也可以不必需让原始的文字对得很整齐
 
+至少有表头和对齐方式
+
+一般表格的处理
+http://www.ituring.com.cn/article/3452
+https://blog.csdn.net/tuxingchen6/article/details/55222951
+
 
 半方大的空白&ensp;或&#8194;
 全方大的空白&emsp;或&#8195;
@@ -60,3 +66,7 @@ Atom china
 
 atom 左侧文件夹怎么打开
 在打开文件的选项卡上单击右键，在弹出的菜单中点击"Reveal in Tree View" 就可以了
+
+列表缩进：
+* + - 不同级最好用不同的列表符好，同级最好用相同的列表符号
+在不同级的一行打印两个 tab 或者 4个 space
