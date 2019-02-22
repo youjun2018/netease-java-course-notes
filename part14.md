@@ -441,7 +441,7 @@ else
 
 ##### 无须到 x-1，到 sqrt(x) 就够了
 ```Java
-for(int i=3; i<Math.sqrt(x); i+=2)
+for(int i=3; i<=Math.sqrt(x); i+=2)
 {
     if(x % i == 0)
     {
