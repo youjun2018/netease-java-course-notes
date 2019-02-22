@@ -3,6 +3,33 @@
 Scanner in = new Scanner(System.in);
 使用 ctr + / 进行代码提示
 
+```Java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+
+	  static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    //  不要多次用System.in new，因为System.in只有一个，多次new会出现问题
+      //  br 放到外面来，或者作为参数传入。再new一次会有问题
+    public static int[][] getArr(int number) throws IOException
+    {
+        ...
+        String str = br.readLine();
+        ...
+    }
+    public static void(String[] args) throw IOException {
+        String str = br.readLine();
+        char ch = str.charAt(0);
+        int number = Integer.parseInt(str.substring(2));
+
+        ...
+  }
+}
+```
+
+
 使用方向键移动到要操作的行，然后按住 shift 键，再按向下方向键，选中多行。最后使用 Ctrl + / 进行注释
 
 System.out.print()  //输出不带回车
