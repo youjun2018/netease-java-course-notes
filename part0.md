@@ -96,4 +96,51 @@ atom 左侧文件夹怎么打开
 
 列表缩进：
 * + - 不同级最好用不同的列表符好，同级最好用相同的列表符号
-在不同级的一行打印两个 tab 或者 4个 space
+在不同级的一行打印两个 tab 或者 4个 space  
+
+```java
+package regularTriangle;
+
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
+interface IShape {
+    public abstract double getArea();  // 抽象方法，求面积
+    public abstract double getPerimeter();  // 抽象方法，求周长
+}
+
+class RTriangle implements IShape {
+	  private double a = 0.0;
+	  private double b = 0.0;
+
+	  RTriangle(double a, double b)
+	  {
+		    this.a = a;
+		    this.b = b;
+	  }
+
+	  public double getArea()
+	  {
+		    return a * b * 0.5;
+	  }
+	  public double getPerimeter()
+	  {
+		    return a + b + Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+	  }
+
+}
+
+public class Main {
+	  public static void main(String[] args) {
+		DecimalFormat d = new DecimalFormat("#.####");  //注意这个格式化输出方式
+    Scanner input = new Scanner(System.in);
+    double a = input.nextDouble();
+    double b = input.nextDouble();
+    IShape r = new RTriangle(a, b);
+    System.out.println(d.format(r.getArea()));
+    System.out.println(d.format(r.getPerimeter()));
+    input.close();
+	}
+
+}
+```
