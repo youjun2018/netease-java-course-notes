@@ -438,29 +438,213 @@ public boolean equalsIgnoreCase(String anotherString)
 ##### **.intern()**
 
 ```Java
-"Hello" == "Hello";
+"Hello" == "Hello";  // output: true
 new String("Hello") == "Hello";
 (new String("Hello").intern() == "Hello");
 ```
 
 
 
+"Hello" == "Hello" 为什么输出 true。两个字符串常量，应该是两个对象，通常来说是两个 String 类对象进行比较，不是两个字符串直接比较。为什么相等呢？下面的例子：
 
 
 
+```Java
+String a = "Hello";
+String b = "Hello";
+System.out.println(a == b);  //output: true
+```
 
+
+
+为什么还是 true? **因为这两个 String 类是从字符串常量创建的，它们的内容是一样的，然后 JDK 就会做这件事情，为了节省内存使用，相同内容的字符串常量在内部只有一个对象。** 其实 a 和 b 指向的是同一个对象。下面的例子：
+
+
+
+```Java
+String a = "H" + "ello";
+String b = "Hello";
+System.out.println(a == b);  //output: true
+```
+
+
+
+因为这个加法计算是什么时候做的？是编译时候做的。看下面的例子：
+
+
+
+```Java
+String h = "H";
+String a = h + "ello";
+String b = "Hello";
+System.out.println(a == b);  //output: false
+```
+
+
+
+编译器如果发现是同一个值，他就会创建同一个对象。这与使用 "==" 判断两个对象是否相等是不矛盾的。因为是同一个对象。String 是 **immutable(不可修改)** 的，所以可以做这件事情。其他非 immutable 是不能使用 "==" 判断两个对象是否相等。
+
+##### Comparing Strings
+* The fact that characters are primitive types with a numeric internal form allows you to compare them using the relational operators. If **c1** and **c2** are characters, the expression
+
+```
+c1 < c2
+```
+
+is **true** if the Unicode value of **c1** is less than that of **c2**.
+
+* The String class allows you to compare two strings using the internal values of the characters, although you must use the **compareTo** method instead of the relational operators:
+
+```
+s1.compareTo(s2)
+```
+
+This call returns an integer that is less than 0 if **s1** is less than **s2**, greater thant 0 if **s1** is greater than **s2**, and 0 if the two strings are equal.
+
+
+##### String Operations
+* **compareTo()** - Compares two strings lexicographically.
+    * The result is a negative integer if this String object lexicographically precedes the argument string.
+    * The result is a positive integer if this String object lexicographically follows the argument string.
+    * The result is zero if the strings are equal.
+    * compareTo returns 0 exactly when the equals(Object) method would return true.
+
+```Java
+public int compareTo(String anotherString)
+
+public int compareToIgnoreCase(String str)  //不考虑大小写
+```
+
+
+##### Accessing char in a String
+* **Individual characters in a <font color="red">String</font> accessed with the <font color="red">charAt</font> method.**
+    * **char charAt(int index)**
+        * Returns the character at the specified index.
+        * An index ranges from **0** to **length() - 1**.
+        * The first character of the sequence is at index **0**, the next at index **1**, and so on, as for array indexing.
+
+charAt 只能取，不能放。因此是圆括号，不是方括号。
+
+
+##### substring in a String
+* **substring in a <font color="red">String</font> accessed with the <font color="red">subsring</font> method.**
+    * **String substring(int beginIndex)**
+        - Returns a new string that is a substring of this string. The substring begins with the character at the specified **beginIndex** and extends to the end of this string.
+        * Examples: **"unhappy"** .
+            - <font color="red">substring(2) returns "happy"</font>
+            - <font color="red">substring(3) returns "appy"</font>
+
+    * **String substring(int beginIndex, int endIndex)**
+        - Returns a new string that is a substring of this string. The substring begins at the specified **beginIndex** and extends to the character at index **endIndex - 1**. Thus the length of the substring is **endIndex - beginIndex**.
+        * Example: **"hamburger"**.
+            - <font color="red">substring(4, 8) returns "urge"</font>
+        * **"smiles"**.
+            - <font color="red">substring(1, 5) returns "mile"</font>
+
+##### Determining the String Size
+* We determine the number of characters in a String with the <font color="red">length</font> method.
+
+```Java
+String name = "Sumatra", str1 = "one", str2 = "";
+
+name.length();   // output: 7
+str1.length();   // output: 3
+str2.length();   // output: 0
+str3.length();   // output: Error  // because no object is created for str3, so it is a null.
+```
+
+
+##### More String Methods
+* int indexOf(int character)
+* int lastIndexOf(int character)
+    - Return the index of the first(last) occurrence of the specified character.
+* int indexOf(int character, int from)
+* int lastIndexOf(int chatacter, int from)
+    - Return the index of the first(last) occurrence of the specified character, searching forward (backward) from the specified index.
+* void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin)
+    - Copies characters from this string into the destination character array.
+
+##### Other Methods in the String Class
+
+||
+|-|
+|**int lastIndexOf(char ch) or lastIndexOf(string str)** <br> Returns the index of the last match of the argument, or -1 if none exists.|
+|**boolean equalsIgnoreCase(String str)** <br> Returns **true** if this string and **str** are the same, ignoring differences in case.|
+|**boolean startsWith(String str)** <br> Returns **true** if this string starts with **str**.|
+|**boolean endsWith(String str)** <br> Returns **true** if this string starts with **str**.|
+|**String replace(char c1, char c2)** <br> Returns a copy of this string with all instances of **c1** replaced by **c2**.|
+|**String trim()** <br> Returns a copy of this string with leading and trailing whitespace removed.|
+|**String toLowerCase()** <br> Returns a copy of this string with all uppercase characters changed to lowercase.|
+|**String toUpperCase()** <br> Returns a copy of this string with all lowercase characters changed to uppercase.|
 
 
 #### 1.3.3 理解String是不可写的对象
 
+函数 replace(char c1, char c2), trim(), toLowerCase(), toUpperCase() 非常迷惑人，它会让人觉得是对这个字符串做修改。实际上，它是使用原来的字符串然后做了特定的动作产生一个新的字符串，最后返回。原来的字符串没变。例如：
+
+
+
+```Java
+String a = "Hello";
+String b = a.replace('l', '1');
+System.out.println(a+","+b);  //output: Hello,He11o
+```
+
+
+如果 replace 函数修改了 a，那么会看到两个相同的字符串。但是结果不是这样的。很多初学者会认为 replace 会修改 a，所以会写如下的代码：
+
+
+
+```Java
+String a = "Hello";
+a.replace('l', '1');  // 结果什么都没有改。
+```
+
+
+
+##### Immutable String
+```Java
+String s = "abc";
+s = "def";
+s = s.trim();
+```
+
+上述代码表示，让 s 指向创建的字符串对象 "abc"，然后又让 s 指向创建字符串对象 "def"，原来的字符串对象 "abc" 被丢弃了。然后执行 "s = s.trim();", 这时 "s.trim()" 会创建新的字符串对象交给 s, 原来的对象又丢弃了。因此，String 的对象做任何操作都会产生新的 String 对象出来。
 
 
 #### 1.3.4 String的格式化和转换
+我们总要做的一件事情是在数值类型和 String 之间做一些转换。比方说，把一个整数变成一个 String。当然我们有很多种做法，我们可以使用如下方法：
+```Java
+System.out.println("" + 2);  //整数编程字符串
+System.out.println("" + 2.2); // 浮点数转换成字符串
+```
+
+* When Java converts data into its string representation during concatenation, it does so by calling one of the overloaded versions of the string conersion method <font face="宋体">valueOf()</font> defined by <font face="宋体">String</font>.
+* <font face="宋体">valueOf()</font> **is overloaded for all the simple types and for type Object.**
+* **For the simple types, valueOf() returns a string that contains the human-readable equivalent of the value with which it is called.**
+* **Every class implements** <font face="宋体">toString()</font> **because it is defined by** <font face="宋体">Object</font>.
+* **For the classes we create we want to override** <font face="宋体">toString()</font> **and provide our own string representations.**
+* **The** <font face="宋体">toString()</font> **method has this general form:** <br> String toString()
+* **To implement** <font face="宋体">toString()</font>, **simply return a** <font face="宋体">String</font> **object that contains the human-readable string that appropriately describes an object of your class.**
 
 
+##### String.format()
+
+jdk 1.5 以后 String 有一个函数 format，format 做的事情和 printf() 做的事情是一样的，你如果用 c 用的好的话，可以使用 s.printf(), 打印到字符串里去。String.format() 表示说这是 String 类的一个静态函数，不需要创建一个 String 对象来使用 format() 函数，直接写 String.format()，它会 format 出一个东西来，产生出一个 String 对象，交给什么什么就可以了。
+
+当然我们前面知道 System.out.println(), 目前 printf 函数了。可以使用 System.out.printf()，这个做法跟 C 的 printf 是一样的。format 可以做一样的事情。
+
+* use %x like in printf()
 
 
+##### Converting Strings to Numbers
+* **The "type wrapper" classes** (Integer, Long, Float, **and** Double) **provide a** <font color="red"> class method</font> **named** valueof **that converts a** String **to an object of that type.**
+```Java
+String piStr = "3.14159";
+Float pi = Float.valueof(piStr);  // 返回 Object
 
+float pi2 = Float.parseFLOAT(piStr);  // 返回 float
+```
 
 
 ### 1.4 StringBuffer类
